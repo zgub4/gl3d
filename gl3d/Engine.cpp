@@ -9,12 +9,6 @@
 #include <iostream>
 #include <vector>
 
-void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
-    if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, GL_TRUE);
-    }
-}
-
 GLfloat vertices[] {
     -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
     0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -121,16 +115,14 @@ void Engine::loop() {
         glClearColor(0.8f, 0.8f, 0.8f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        camera.update(window);
+
         baseShader.use();
         
         texture.use();
 
-
         glm::mat4 model;
         model = glm::rotate(model, static_cast<GLfloat>(glfwGetTime()) * glm::radians(55.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-
-        glm::mat4 view;
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 
         glm::mat4 projection;
         auto ratio = float(width) / float(height);
@@ -142,7 +134,7 @@ void Engine::loop() {
 
         glBindVertexArray(vao);
         glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
-        glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(camera.getView()));
         glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
         //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
         glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -170,7 +162,7 @@ void Engine::createWindow() {
 
 void Engine::createContext() {
     glfwMakeContextCurrent(window);
-    glfwSetKeyCallback(window, keyCallback);
+//    glfwSetKeyCallback(window, keyCallback);
 
     glewExperimental = GL_TRUE;
     auto glewResult = glewInit();

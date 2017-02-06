@@ -1,6 +1,8 @@
 #include "Input.h"
 
 #include <algorithm>
+#include <iostream>
+#include <GLFW/glfw3.h>
 
 Input::Input() {
 }
@@ -9,16 +11,14 @@ Input::Input() {
 Input::~Input() {
 }
 
-void Input::addKey(int key) {
-    auto val = std::find(keys.begin(), keys.end(), key);
-    if(val == keys.end()) {
-        keys.push_back(key);
-    }
+bool Input::isPressed(GLFWwindow* window, int key) {
+    return glfwGetKey(window, key);
 }
-
-void Input::removeKey(int key) {
-    auto val = std::find(keys.begin(), keys.end(), key);
-    if(val != keys.end()) {
-        keys.erase(val);
-    }
-}
+//
+//void Input::init(GLFWwindow* window) {
+//    this->window = window;
+//}
+//
+//bool Input::isPressed(int key) {
+//    return glfwGetKey(window, key);
+//}

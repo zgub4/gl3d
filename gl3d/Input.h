@@ -2,16 +2,18 @@
 
 #include <vector>
 
+struct GLFWwindow;
+
 class Input
 {
 public:
     Input();
     ~Input();
 
-    void addKey(int key);
-    void removeKey(int key);
+//    void init(GLFWwindow* window);
+    static bool isPressed(GLFWwindow* window, int key);
 
-private:
-    std::vector <int> keys;
+//private:
+//    GLFWwindow* window;
 };
 

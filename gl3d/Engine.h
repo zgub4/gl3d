@@ -4,6 +4,7 @@
 
 #include "Shader.h"
 #include "Texture.h"
+#include "Camera.h"
 
 struct GLFWwindow;
 
@@ -29,5 +30,6 @@ private:
     GLuint vao;
     Texture texture;
     Shader baseShader;
+    Camera camera;
 };
 
