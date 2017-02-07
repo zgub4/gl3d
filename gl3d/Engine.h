@@ -5,6 +5,7 @@
 #include "Shader.h"
 #include "Texture.h"
 #include "Camera.h"
+#include "Time.h"
 
 struct GLFWwindow;
 

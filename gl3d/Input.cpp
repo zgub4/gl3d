@@ -14,11 +14,3 @@ Input::~Input() {
 bool Input::isPressed(GLFWwindow* window, int key) {
     return glfwGetKey(window, key);
 }
-//
-//void Input::init(GLFWwindow* window) {
-//    this->window = window;
-//}
-//
-//bool Input::isPressed(int key) {
-//    return glfwGetKey(window, key);
-//}

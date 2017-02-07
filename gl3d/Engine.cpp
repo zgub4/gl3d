@@ -110,6 +110,8 @@ void Engine::init() {
 
 void Engine::loop() {
     while(!glfwWindowShouldClose(window)) {
+        Time::begin();
+
         glfwPollEvents();
 
         glClearColor(0.8f, 0.8f, 0.8f, 1.f);
@@ -141,6 +143,8 @@ void Engine::loop() {
         glBindVertexArray(0);
 
         glfwSwapBuffers(window);
+
+        Time::end();
     }
 }
 
