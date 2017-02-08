@@ -2,22 +2,26 @@
 
 #include <SOIL.h>
 
-Texture::Texture() {
+Texture::Texture()
+{
 }
 
 
-Texture::~Texture() {
+Texture::~Texture()
+{
 }
 
-void Texture::load(const std::string& imagePath) {
+void Texture::load(const std::string& imagePath)
+{
     auto image = SOIL_load_image(imagePath.c_str(), &width, &height, nullptr, SOIL_LOAD_RGBA);
-    if(image == nullptr) {
+    if(image == nullptr)
+    {
         fprintf(stderr, "failed to load image: %s", imagePath.c_str());
         return;
     }
     glGenTextures(1, &id);
     glBindTexture(GL_TEXTURE_2D, id);
-    
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -30,6 +34,7 @@ void Texture::load(const std::string& imagePath) {
     SOIL_free_image_data(image);
 }
 
-void Texture::use() const {
+void Texture::use() const
+{
     glBindTexture(GL_TEXTURE_2D, id);
 }

@@ -10,7 +10,8 @@ struct GLFWwindow;
 
 #define DEBUG
 
-class Engine {
+class Engine
+{
 public:
     Engine();
     ~Engine();
@@ -33,4 +34,3 @@ private:
     Shader baseShader;
     Camera camera;
 };
-

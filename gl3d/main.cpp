@@ -1,11 +1,14 @@
 #include "Engine.h"
 
-int main(int argc, char** argv) {
-
-    Engine eg{};
-    try {
+int main(int argc, char** argv)
+{
+    Engine eg {};
+    try
+    {
         eg.run();
-    } catch(const std::runtime_error& e) {
+    }
+    catch(const std::runtime_error& e)
+    {
         e.what();
         system("pause");
         return EXIT_FAILURE;

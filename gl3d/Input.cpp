@@ -2,8 +2,8 @@
 #include <GLFW/glfw3.h>
 
 GLFWwindow* Input::window = nullptr;
-glm::vec2 Input::currentPosition{0.0f, 0.0f};
-glm::vec2 Input::lastPosition{400.0f, 300.0f};
+glm::vec2 Input::currentPosition {0.0f, 0.0f};
+glm::vec2 Input::lastPosition {400.0f, 300.0f};
 
 void Input::init(GLFWwindow* window)
 {

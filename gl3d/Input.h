@@ -5,10 +5,10 @@
 
 struct GLFWwindow;
 
-class Input 
+class Input
 {
 public:
-    
+
     static void init(GLFWwindow* window);
     static void update();
 
@@ -26,4 +26,3 @@ private:
     Input(Input const&) = delete;
     void operator=(Input const&) = delete;
 };
-

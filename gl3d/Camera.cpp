@@ -6,19 +6,22 @@
 #include "Input.h"
 #include "Time.h"
 
-Camera::Camera() {
+Camera::Camera()
+{
 }
 
 
-Camera::~Camera() {
+Camera::~Camera()
+{
 }
 
-void Camera::update() {
+void Camera::update()
+{
     auto actualSpeed = cameraSpeed * Time::delta();
     front = calculateNewFront();
     view = glm::lookAt(position, position + front, up);
-    if(Input::isKeyPressed(GLFW_KEY_W)) { position += actualSpeed  * front; }
-    if(Input::isKeyPressed(GLFW_KEY_S)) { position -= actualSpeed  * front; }
+    if(Input::isKeyPressed(GLFW_KEY_W)) { position += actualSpeed * front; }
+    if(Input::isKeyPressed(GLFW_KEY_S)) { position -= actualSpeed * front; }
     if(Input::isKeyPressed(GLFW_KEY_A)) { position -= glm::normalize(glm::cross(front, up)) * actualSpeed; }
     if(Input::isKeyPressed(GLFW_KEY_D)) { position += glm::normalize(glm::cross(front, up)) * actualSpeed; }
 }

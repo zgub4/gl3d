@@ -4,14 +4,17 @@
 float Time::deltaTime = 0.0f;
 float Time::frameTime = 0.0f;
 
-void Time::begin() {
+void Time::begin()
+{
     frameTime = glfwGetTime();
 }
 
-void Time::end() {
+void Time::end()
+{
     deltaTime = glfwGetTime() - deltaTime;
 }
 
-float Time::delta() {
+float Time::delta()
+{
     return deltaTime / 1000.0f;
 }

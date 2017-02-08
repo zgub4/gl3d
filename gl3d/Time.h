@@ -1,14 +1,8 @@
 #pragma once
 
-class Time {
+class Time
+{
 public:
-
-    Time() {
-    }
-
-    ~Time() {
-    }
-
     static void begin();
     static void end();
     static float delta();
@@ -16,4 +10,8 @@ public:
 private:
     static float deltaTime;
     static float frameTime;
+
+    Time() = delete;
+    Time(Time const&) = delete;
+    void operator=(Time const&) = delete;
 };
