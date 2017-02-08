@@ -1,19 +1,29 @@
 #pragma once
 
 #include <vector>
+#include <glm/glm.hpp>
 
 struct GLFWwindow;
 
-class Input
+class Input 
 {
 public:
-    Input();
-    ~Input();
+    
+    static void init(GLFWwindow* window);
+    static void update();
 
-//    void init(GLFWwindow* window);
-    static bool isPressed(GLFWwindow* window, int key);
+    static bool isKeyPressed(int key);
+    static glm::vec2 getMouseDelta();
 
-//private:
-//    GLFWwindow* window;
+private:
+    static void updateMousePosition();
+
+    static glm::vec2 currentPosition;
+    static glm::vec2 lastPosition;
+    static GLFWwindow* window;
+
+    Input() = delete;
+    Input(Input const&) = delete;
+    void operator=(Input const&) = delete;
 };
 

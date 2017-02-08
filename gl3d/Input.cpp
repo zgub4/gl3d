@@ -1,16 +1,36 @@
 #include "Input.h"
-
-#include <algorithm>
-#include <iostream>
 #include <GLFW/glfw3.h>
 
-Input::Input() {
+GLFWwindow* Input::window = nullptr;
+glm::vec2 Input::currentPosition{0.0f, 0.0f};
+glm::vec2 Input::lastPosition{400.0f, 300.0f};
+
+void Input::init(GLFWwindow* window)
+{
+    Input::window = window;
 }
 
-
-Input::~Input() {
+void Input::update()
+{
+    glfwPollEvents();
+    updateMousePosition();
 }
 
-bool Input::isPressed(GLFWwindow* window, int key) {
+bool Input::isKeyPressed(int key)
+{
     return glfwGetKey(window, key);
+}
+
+glm::vec2 Input::getMouseDelta()
+{
+    glm::vec2 delta(currentPosition.x - lastPosition.x, lastPosition.y - currentPosition.y);
+    lastPosition = currentPosition;
+    return delta;
+}
+
+void Input::updateMousePosition()
+{
+    static double x, y;
+    glfwGetCursorPos(window, &x, &y);
+    currentPosition = glm::vec2(x, y);
 }

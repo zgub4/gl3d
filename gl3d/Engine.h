@@ -5,12 +5,12 @@
 #include "Shader.h"
 #include "Texture.h"
 #include "Camera.h"
-#include "Time.h"
 
 struct GLFWwindow;
 
-class Engine
-{
+#define DEBUG
+
+class Engine {
 public:
     Engine();
     ~Engine();
