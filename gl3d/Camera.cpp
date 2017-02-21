@@ -19,11 +19,12 @@ void Camera::update()
 {
     auto actualSpeed = cameraSpeed * Time::delta();
     front = calculateNewFront();
+    right = glm::normalize(glm::cross(front, up));
     view = glm::lookAt(position, position + front, up);
-    if(Input::isKeyPressed(GLFW_KEY_W)) { position += actualSpeed * front; }
-    if(Input::isKeyPressed(GLFW_KEY_S)) { position -= actualSpeed * front; }
-    if(Input::isKeyPressed(GLFW_KEY_A)) { position -= glm::normalize(glm::cross(front, up)) * actualSpeed; }
-    if(Input::isKeyPressed(GLFW_KEY_D)) { position += glm::normalize(glm::cross(front, up)) * actualSpeed; }
+    if(Input::isKeyPressed(GLFW_KEY_W)) { position += front * actualSpeed; }
+    if(Input::isKeyPressed(GLFW_KEY_S)) { position -= front * actualSpeed; }
+    if(Input::isKeyPressed(GLFW_KEY_A)) { position -= right * actualSpeed; }
+    if(Input::isKeyPressed(GLFW_KEY_D)) { position += right * actualSpeed; }
 }
 
 glm::mat4 Camera::getView() const
