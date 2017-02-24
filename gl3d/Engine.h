@@ -8,8 +8,6 @@
 
 struct GLFWwindow;
 
-#define DEBUG
-
 class Engine
 {
 public:
