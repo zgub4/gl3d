@@ -5,8 +5,10 @@ layout (location = 1) in vec2 in_texCoord;
 
 out vec2 frag_texCoord;
 
+uniform mat4 projection;
+
 void main()
 {
-  gl_Position = vec4(in_position, 1.0f);
+  gl_Position = projection * vec4(in_position, 1.0f);
   frag_texCoord = vec2(in_texCoord.s, 1.0f - in_texCoord.t);
 }

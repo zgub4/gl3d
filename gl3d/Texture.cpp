@@ -38,3 +38,8 @@ void Texture::use() const
 {
     glBindTexture(GL_TEXTURE_2D, id);
 }
+
+glm::vec2 Texture::getResolution() const
+{
+    return glm::vec2(width, height);
+}

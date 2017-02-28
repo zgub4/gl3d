@@ -1,7 +1,6 @@
 #include "Engine.h"
 
 #include <GLFW/glfw3.h>
-#include <SOIL.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -12,25 +11,12 @@
 #include "Time.h"
 #include "Input.h"
 
-GLfloat vertices[] {
-    -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-    0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-    0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
-    -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
-};
-
-GLuint indices[] {
-    0, 1, 3,
-    1, 2, 3
-};
-
 Engine::Engine()
 {
 }
 
 Engine::~Engine()
 {
-    terminate();
 }
 
 void Engine::run()
@@ -50,29 +36,10 @@ void Engine::init()
     createWindow();
     createContext();
 
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
-    GLuint vbo;
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    GLuint ebo;
-    glGenBuffers(1, &ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), nullptr);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), reinterpret_cast <GLvoid*>(3 * sizeof(GLfloat)));
-    glEnableVertexAttribArray(1);
-
-    glBindVertexArray(0);
-
-    texture.load("textures/tentacool.png");
-
+    sprite.create("textures/tentacool.png", glm::vec2(0.0f, 0.0f), glm::vec2(200.0f, 200.0f));
     baseShader.create("shaders/basic.vs", "shaders/basic.fs");
+
+    orthoMatrix = glm::ortho(0.0f, (float)width, 0.0f, (float)height);
 
     GLint numberOfAttributes;
     glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &numberOfAttributes);
@@ -98,20 +65,14 @@ void Engine::loop()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         camera.update();
-
         baseShader.use();
 
-        texture.use();
+        GLuint projectionLocation = glGetUniformLocation(baseShader.getShaderId(), "projection");
+        glm::mat4 cameraMatrix;
+        cameraMatrix = glm::translate(orthoMatrix, glm::vec3(0.0f, 0.0f, 0.0f));
+        glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(cameraMatrix));
 
-        GLfloat lightning = (glm::sin(glfwGetTime()) + 1) / 2;
-        GLuint lightningLocation = glGetUniformLocation(baseShader.getShaderId(), "lightning");
-
-        glBindVertexArray(vao);
-        
-        glUniform1f(lightningLocation, lightning);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-        
-        glBindVertexArray(0);
+        sprite.draw();
 
         glfwSwapBuffers(window);
 

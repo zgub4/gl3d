@@ -5,6 +5,7 @@
 #include "Shader.h"
 #include "Texture.h"
 #include "Camera.h"
+#include "Sprite.h"
 
 struct GLFWwindow;
 
@@ -28,7 +29,9 @@ private:
     const GLsizei width = 800;
     const GLsizei height = 600;
     GLuint vao;
-    Texture texture;
+    Sprite sprite;
     Shader baseShader;
     Camera camera;
+
+    glm::mat4 orthoMatrix;
 };
